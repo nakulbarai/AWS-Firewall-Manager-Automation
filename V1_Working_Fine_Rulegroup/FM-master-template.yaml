@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  S3Bucket:
+    Description: The name of the bucket that contains your packaged source
+    Type: String
+    Default: pac-waf-rule
+  S3Key:
+    Description: The name of the ZIP package for custom resourse lambda
+    Type: String
+    Default: rulegroup.zip
+Resources:
+  ruleGroupStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://s3.amazonaws.com/pac-waf-rule/FMRuleGroup.yaml
+      Parameters:
+        S3Bucket: !Ref S3Bucket
+        S3Key: !Ref S3Key
+      TimeoutInMinutes: '60'
